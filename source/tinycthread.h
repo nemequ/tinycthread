@@ -1,6 +1,6 @@
 /* -*- mode: c; tab-width: 2; indent-tabs-mode: nil; -*-
 Copyright (c) 2012 Marcus Geelnard
-Copyright (c) 2013-2014 Evan Nemerson
+Copyright (c) 2013-2016 Evan Nemerson
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -111,12 +111,11 @@ extern "C" {
 #define TIME_UTC 1
 #define _TTHREAD_EMULATE_TIMESPEC_GET_
 
-#if defined(_TTHREAD_WIN32_)
-struct _tthread_timespec {
+#if defined(_TTHREAD_WIN32_) && !defined(_TIMESPEC_DEFINED) && !defined(__struct_timespec_defined)
+struct timespec {
   time_t tv_sec;
   long   tv_nsec;
 };
-#define timespec _tthread_timespec
 #endif
 
 int _tthread_timespec_get(struct timespec *ts, int base);
